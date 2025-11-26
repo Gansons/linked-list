@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
@@ -43,13 +44,44 @@ public class saraksts {
 			case "1":
 				do {
 					koPievienot = JOptionPane.showInputDialog("Kādu produktu pievienot?");
-				}while((jauEksiste(saraksts, koPievienot) == true || !koPievienot.matches("[\\p{L}&&\\p{IsLatin}]+")));
+				}while((jauEksiste(saraksts, koPievienot) == true) || !koPievienot.matches("^[\\p{L} ]+$"));
 				
 				saraksts.add(koPievienot.toLowerCase());
 				JOptionPane.showMessageDialog(null, "Produkts pievienots sarakstam!", "Informācija",
 						JOptionPane.INFORMATION_MESSAGE);
 				break;
+				
+			case "2":
+				JOptionPane.showMessageDialog(null, "Produktu skaits: "+saraksts.size(),"Informācija", JOptionPane.INFORMATION_MESSAGE);
+				break;
+				
+			case "3":
+				if(saraksts.size() == 0)
+					JOptionPane.showMessageDialog(null, "Nav sarakstā produktu", "Informācija", JOptionPane.INFORMATION_MESSAGE);
+				else {
+					Iterator<String> izvade = saraksts.iterator();
+					String str = "";
+					while(izvade.hasNext()) {
+						str += izvade.next()+"\n";
+					}
+					JOptionPane.showMessageDialog(null, str, "Produktu saraksts", JOptionPane.INFORMATION_MESSAGE);
+				}
+				break;
+				
+			case "4":
+				do {
+					koAtrast = JOptionPane.showInputDialog(null,
+							"Kādu produktu maklēt sarakstā?", "Jautājums", 
+							JOptionPane.INFORMATION_MESSAGE);
+				}while(!koAtrast.matches("^[\\\\p{L} ]+$"));
+				
+				JOptionPane.showMessageDialog(null, ((saraksts.indexOf(koAtrast))>-1)?
+						"Produkts atrasts "+saraksts.indexOf(koAtrast)+". pozīcijā"
+						: "Produkts netika atrasts sarakstā!", "Infromācija", JOptionPane.INFORMATION_MESSAGE);
+				break;
 			}
+			
+			
 			
 		}while(!izvele.equals("0"));
 
