@@ -41,53 +41,78 @@ public class saraksts {
 			}while(!izvele.matches("\\d+"));
 			
 			switch(izvele) {
-			case "1":
+			
+			case  "1":
+				
 				do {
-					koPievienot = JOptionPane.showInputDialog("Kādu produktu pievienot?");
-				}while((jauEksiste(saraksts, koPievienot) == true) || !koPievienot.matches("^[\\p{L} ]+$"));
+					
+					koPievienot = JOptionPane.showInputDialog("Ievadi produktu ko pievienot:");
+					
+					if(koPievienot == null)
+						break;
+					
+				}while((jauEksiste(saraksts, koPievienot) == true )|| !koPievienot.matches("^[\\p{L} ]+$"));
+				
+				if(koPievienot == null)
+					break;
 				
 				saraksts.add(koPievienot.toLowerCase());
-				JOptionPane.showMessageDialog(null, "Produkts pievienots sarakstam!", "Informācija",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Produkts veiksmigi pievienots sarakstam!");
+				
+				
 				break;
 				
+				
+				
 			case "2":
-				JOptionPane.showMessageDialog(null, "Produktu skaits: "+saraksts.size(),"Informācija", JOptionPane.INFORMATION_MESSAGE);
+				
+				
+				JOptionPane.showMessageDialog(null, "Saraksta produktu skaits ir: " + saraksts.size());
 				break;
 				
 			case "3":
-				if(saraksts.size() == 0)
-					JOptionPane.showMessageDialog(null, "Nav sarakstā produktu", "Informācija", JOptionPane.INFORMATION_MESSAGE);
-				else {
-					Iterator<String> izvade = saraksts.iterator();
-					String str = "";
-					while(izvade.hasNext()) {
-						str += izvade.next()+"\n";
-					}
-					JOptionPane.showMessageDialog(null, str, "Produktu saraksts", JOptionPane.INFORMATION_MESSAGE);
-				}
-				break;
 				
+				if(saraksts.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Saraksts ir tukss!","Informacija",JOptionPane.INFORMATION_MESSAGE);
+					}else {
+						Iterator<String> izvade = saraksts.iterator();
+						String str = "";
+						while(izvade.hasNext()) {
+							str += izvade.next() + "\n";
+						}
+						
+						JOptionPane.showMessageDialog(null, "Saraksta produkti ir:\n" + str,"Produktu Saraksts",JOptionPane.INFORMATION_MESSAGE);
+						break;
+					}
+				break;
 			case "4":
 				do {
-					koAtrast = JOptionPane.showInputDialog(null,
-							"Kādu produktu maklēt sarakstā?", "Jautājums", 
-							JOptionPane.INFORMATION_MESSAGE);
-				}while(!koAtrast.matches("^[\\\\p{L} ]+$"));
+					koAtrast = JOptionPane.showInputDialog("Ievadi produktu ko atrast:");
+					if(koAtrast == null)
+						break;
+					if(saraksts.contains(koAtrast.toLowerCase())) {
+						JOptionPane.showMessageDialog(null, "Produkts atrasts saraksta!");
+					}else {
+						JOptionPane.showMessageDialog(null, "Produkts nav saraksta!");
+					}
+					
+					
+					break;
+				}while(!koAtrast.matches("^[\\p{L} ]+$"));
 				
-				JOptionPane.showMessageDialog(null, ((saraksts.indexOf(koAtrast))>-1)?
-						"Produkts atrasts "+saraksts.indexOf(koAtrast)+". pozīcijā"
-						: "Produkts netika atrasts sarakstā!", "Infromācija", JOptionPane.INFORMATION_MESSAGE);
 				break;
 				
-				
 			case "5":
-				
+				if(saraksts.size() == 0) {
+					JOptionPane.showMessageDialog(null, "Nav izveidots saraksts", "Kļūda!", JOptionPane.WARNING_MESSAGE);
+					break;
+				}
 				do {
 					koPievienot = 
 							JOptionPane.showInputDialog("Kādu produktu pievienot?");
 					kurPievienot = 
 							Integer.parseInt(JOptionPane.showInputDialog("Kurā pozīcijā pievienot?"));
+					
 				}while((jauEksiste(saraksts, koPievienot) == true) || !koPievienot.matches("^[\\p{L} ]+$") || 
 						saraksts.size() <= kurPievienot || kurPievienot < 0);
 				saraksts.add(kurPievienot, koPievienot);
@@ -110,6 +135,7 @@ public class saraksts {
 					JOptionPane.showMessageDialog(null, "Produkts veiksmigi noņemts no saraksta!", "Informacija", JOptionPane.INFORMATION_MESSAGE);
 				}
 				break;
+				
 			case "8":
 				if(!saraksts.isEmpty()) {
 					saraksts.removeFirst();
@@ -118,6 +144,7 @@ public class saraksts {
 					JOptionPane.showMessageDialog(null, "Saraksts ir tukss!", "Kļūda", JOptionPane.ERROR_MESSAGE);
 				}
 				break;
+				
 				case "9":
 					if(!saraksts.isEmpty()) {
 						saraksts.removeLast();
@@ -126,8 +153,11 @@ public class saraksts {
 						JOptionPane.showMessageDialog(null, "Saraksts ir tukss!", "Kļūda", JOptionPane.ERROR_MESSAGE);
 					}
 					break;
+					
 					case "10":
+						
 						do {
+							
 							kuruMainit = Integer.parseInt(JOptionPane.showInputDialog("Ievadi indeksa vietu kuru mainit (no 0 lidz " + (saraksts.size()-1) + "):"));
 							arKoAizstāt = JOptionPane.showInputDialog("Ievadi produktu ar ko aizstatit:");
 							if(kuruMainit <0 || kuruMainit > saraksts.size()-1) {
@@ -137,16 +167,21 @@ public class saraksts {
 									JOptionPane.showMessageDialog(null, "Produkts veiksmigi aizstatits!", "Informacija", JOptionPane.INFORMATION_MESSAGE);
 								}
 							
+								break;
 						}while(!arKoAizstāt.matches("^[\\p{L} ]+$"));
+						
 						break;
+						
 						case "11":
 							saraksts.sort(String.CASE_INSENSITIVE_ORDER);
 							JOptionPane.showMessageDialog(null, "Saraksts veiksmigi sakartots aflabetiski!", "Informacija", JOptionPane.INFORMATION_MESSAGE);
 							break;
-							case "12":
+							
+						case "12":
 								saraksts.clear();
 								JOptionPane.showMessageDialog(null, "Saraksts veiksmigi nodzests!", "Informacija", JOptionPane.INFORMATION_MESSAGE);
 								break;
+							
 			}
 			
 		
